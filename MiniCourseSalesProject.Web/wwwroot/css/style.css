@@ -1,0 +1,37 @@
+/* Genel düzenlemeler */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Sağ kaymayı engelle */
+}
+
+/* Sepet butonunun ve kullanıcı dropdown menüsünün konumlandırılması */
+.navbar-nav {
+    margin-right: 0;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+@media (max-width: 767px) {
+    .card img {
+        height: 150px;
+    }
+}
+
+#cartItems {
+    max-height: 300px;
+    overflow-y: auto;
+}

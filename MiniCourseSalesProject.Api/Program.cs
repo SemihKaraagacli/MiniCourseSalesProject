@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MiniCourseSalesProject.Repository;
 using MiniCourseSalesProject.Repository.CategoryRepository;
 using MiniCourseSalesProject.Repository.CourseRepository;
@@ -7,11 +9,13 @@ using MiniCourseSalesProject.Repository.GenericRepository;
 using MiniCourseSalesProject.Repository.OrderRepository;
 using MiniCourseSalesProject.Repository.PaymentRepository;
 using MiniCourseSalesProject.Repository.UnitOfWork;
+using MiniCourseSalesProject.Service.Auth;
 using MiniCourseSalesProject.Service.CategoryService;
 using MiniCourseSalesProject.Service.CourseService;
 using MiniCourseSalesProject.Service.OrderService;
 using MiniCourseSalesProject.Service.PaymentService;
 using MiniCourseSalesProject.Service.User;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,11 +43,32 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+//Token Check
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["TokenOptions:Issuer"],
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenOptions:SymmetricKey"]!)),
+        ValidateAudience = false,
+    };
+});
+
+
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -63,6 +88,7 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandler();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

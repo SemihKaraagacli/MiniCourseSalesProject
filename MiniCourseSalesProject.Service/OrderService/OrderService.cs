@@ -27,22 +27,13 @@ namespace MiniCourseSalesProject.Service.OrderService
             }
 
             decimal totalAmount = 0;
-            List<Guid> outOfStockCourses = new List<Guid>();
 
             // Toplam fiyat hesapla ve stokları kontrol et
             foreach (var course in orderedCourse)
             {
                 // Stok kontrolü
                 var requestedQuantity = request.CourseId.Count(id => id == course.Id);
-                if (course.Quantity < requestedQuantity)
-                {
-                    outOfStockCourses.Add(course.Id);
-                }
                 totalAmount = totalAmount + (course.Price * requestedQuantity);
-            }
-            if (outOfStockCourses.Any())
-            {
-                return ServiceResult<Guid>.Fail($"The following courses are out of stock: {string.Join(", ", outOfStockCourses)}", HttpStatusCode.NotFound);
             }
 
             var newOrder = new Order
@@ -113,23 +104,14 @@ namespace MiniCourseSalesProject.Service.OrderService
             var orderedCourses = order.Courses.ToList();
             decimal newTotalAmount = 0;
 
-            List<Guid> outOfStockCourses = new List<Guid>();
-
             foreach (var course in order.Courses)
             {
                 if (request.CourseIds.Contains(course.Id))
                 {
                     var requestedQuantity = request.CourseIds.Count(id => id == course.Id);
-                    if (course.Quantity < requestedQuantity)
-                    {
-                        outOfStockCourses.Add(course.Id);
-                    }
+
                     newTotalAmount = newTotalAmount + (course.Price * requestedQuantity);
                 }
-            }
-            if (outOfStockCourses.Any())
-            {
-                return ServiceResult<Guid>.Fail($"The following courses are out of stock: {string.Join(", ", outOfStockCourses)}", HttpStatusCode.NotFound);
             }
             order.TotalAmount = newTotalAmount;
             order.UpdatedDate = DateTime.UtcNow;

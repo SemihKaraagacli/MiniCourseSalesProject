@@ -11,14 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Auth\Dtos\" />
     <Folder Include="CourseService\Dtos\" />
     <Folder Include="OrderService\Dtos\" />
-    <Folder Include="User\Dtos\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
   </ItemGroup>
 
 </Project>

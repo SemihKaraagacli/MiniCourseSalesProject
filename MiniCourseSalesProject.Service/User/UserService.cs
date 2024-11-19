@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MiniCourseSalesProject.Repository.CategoryRepository;
 using MiniCourseSalesProject.Repository.Entities;
+using MiniCourseSalesProject.Repository.OrderRepository;
 using MiniCourseSalesProject.Service.OrderService.Dtos;
 using MiniCourseSalesProject.Service.User.Dtos;
 using System.Net;
 
 namespace MiniCourseSalesProject.Service.User
 {
-    public class UserService(UserManager<AppUser> userManager)
+    public class UserService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IOrderRepository orderRepository)
     {
         public async Task<ServiceResult<Guid>> SignUp(SignUpRequest signUpRequest)
         {
@@ -77,22 +79,25 @@ namespace MiniCourseSalesProject.Service.User
         }
         public async Task<ServiceResult<UserDto>> Get(Guid Id)
         {
-            var hasUser = await userManager.FindByIdAsync(Id.ToString());
+            var hasUser = await userManager.Users.Include(u => u.Orders).FirstOrDefaultAsync(u => u.Id == Id);
+
             if (hasUser is null)
             {
                 return ServiceResult<UserDto>.Fail("User not found.", HttpStatusCode.NotFound);
             }
+
             var userDto = new UserDto
             {
                 Id = hasUser.Id,
                 UserName = hasUser.UserName,
                 Email = hasUser.Email,
-                Wallet = hasUser.Wallet,  // Wallet'ı burada alıyoruz
+                Wallet = hasUser.Wallet, // Wallet'ı burada alıyoruz
                 Orders = hasUser.Orders.Select(o => new OrderDto
                 {
-                    Id = o.Id  // Sadece ID'yi alıyoruz
+                    Id = o.Id // Sadece ID'yi alıyoruz
                 }).ToList()
             };
+
             return ServiceResult<UserDto>.Success(userDto, HttpStatusCode.OK);
         }
         public async Task<ServiceResult<UserDto>> GetUserWithOrdersAsync(Guid userId)
@@ -114,6 +119,34 @@ namespace MiniCourseSalesProject.Service.User
                 }).ToList()
             };
             return ServiceResult<UserDto>.Success(userDto, HttpStatusCode.OK);
+        }
+
+
+
+        public async Task<ServiceResult> AddRoleToUserAsync(AddRoleToUserRequest request)
+        {
+            var hasRole = await roleManager.FindByNameAsync(request.RoleName);
+            if (hasRole is null)
+            {
+                var resultAsRole = await roleManager.CreateAsync(new AppRole() { Name = request.RoleName });
+                if (!resultAsRole.Succeeded)
+                {
+                    var errorList = resultAsRole.Errors.Select(x => x.Description).ToList();
+                    return ServiceResult.Fail(errorList, HttpStatusCode.BadRequest);
+                }
+            }
+            var hasUser = await userManager.FindByIdAsync(request.userId.ToString());
+            if (hasUser == null)
+            {
+                return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
+            }
+            var result = await userManager.AddToRoleAsync(hasUser, request.RoleName);
+            if (!result.Succeeded)
+            {
+                var errorList = result.Errors.Select(x => x.Description).ToList();
+                return ServiceResult.Fail(errorList, HttpStatusCode.BadRequest);
+            }
+            return ServiceResult.Success(HttpStatusCode.OK);
         }
     }
 }

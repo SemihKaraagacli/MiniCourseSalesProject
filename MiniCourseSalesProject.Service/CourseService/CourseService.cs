@@ -29,7 +29,6 @@ namespace MiniCourseSalesProject.Service.CourseService
                 Name = request.Name,
                 Description = request.Description,
                 Price = request.Price,
-                Quantity = request.Quantity,
                 CreatedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow,
                 CategoryId = request.CategoryId,
@@ -42,8 +41,7 @@ namespace MiniCourseSalesProject.Service.CourseService
                 Name = newCourse.Name,
                 Description = newCourse.Description,
                 Price = newCourse.Price,
-                Quantity = newCourse.Quantity,
-                CategoryName = newCourse.Name,
+                CategoryName = newCourse.Category.Name,
                 CreatedDate = newCourse.CreatedDate,
                 UpdatedDate = newCourse.UpdatedDate,
 
@@ -63,8 +61,7 @@ namespace MiniCourseSalesProject.Service.CourseService
                     Name = x.Name,
                     Description = x.Description,
                     Price = x.Price,
-                    Quantity = x.Quantity,
-                    CategoryName = x.Name,
+                    CategoryName = x.Category.Name,
                     CreatedDate = x.CreatedDate,
                     UpdatedDate = x.UpdatedDate,
 
@@ -81,14 +78,14 @@ namespace MiniCourseSalesProject.Service.CourseService
             {
                 return ServiceResult<CourseDto>.Fail("Course not found.", HttpStatusCode.NotFound);
             }
+            var category = categoryRepository.GetByIdAsync(hasCourse.CategoryId).Result;
             var courseDto = new CourseDto
             {
                 Id = hasCourse.Id,
                 Name = hasCourse.Name,
                 Description = hasCourse.Description,
                 Price = hasCourse.Price,
-                Quantity = hasCourse.Quantity,
-                CategoryName = hasCourse.Name,
+                CategoryName = category.Name,
                 CreatedDate = hasCourse.CreatedDate,
                 UpdatedDate = hasCourse.UpdatedDate,
             };
@@ -105,7 +102,6 @@ namespace MiniCourseSalesProject.Service.CourseService
             hasCourse.Name = request.Name;
             hasCourse.Description = request.Description;
             hasCourse.Price = request.Price;
-            hasCourse.Quantity = request.Quantity;
             hasCourse.UpdatedDate = DateTime.UtcNow;
             hasCourse.CategoryId = request.CategoryId;
 

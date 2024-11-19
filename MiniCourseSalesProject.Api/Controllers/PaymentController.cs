@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MiniCourseSalesProject.Service.PaymentService;
 using MiniCourseSalesProject.Service.PaymentService.Dtos;
+using MiniCourseSalesProject.Service.PaymentService;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
-    public class HomeController(PaymentService paymentService) : CustomControllerBase
+    public class PaymentController(IPaymentService paymentService) : CustomControllerBase
     {
-        //Giriş sayfası
-        //Ürünleri görüntüleme
-        //sipariş alma
-
         [HttpPost]
         public async Task<IActionResult> ProcessPaymentAsync(PaymentCreateRequest request)
         {

@@ -3,15 +3,20 @@ using MiniCourseSalesProject.Service.CategoryService.Dtos;
 using MiniCourseSalesProject.Service.CategoryService;
 using MiniCourseSalesProject.Service.CourseService.Dtos;
 using MiniCourseSalesProject.Service.CourseService;
+using Microsoft.AspNetCore.Authorization;
+using MiniCourseSalesProject.Service.User.Dtos;
+using MiniCourseSalesProject.Service.User;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
-    public class AdminController(ICategoryService categoryService, ICourseService courseService) : CustomControllerBase
+    public class AdminController(ICategoryService categoryService, ICourseService courseService, UserService userService) : CustomControllerBase
     {
-        //Kategori ekleme silme düzenleme
+        // Kategori ekleme silme düzenleme
         // ürün ekleme silme düzenleme
         // kullanıcılara role atama
         // sistemdeki tüm loglar
+        // tüm kullanıcıları getirme
+
 
         //CATEGORY SIDE
         [HttpPost("Category")]
@@ -77,6 +82,27 @@ namespace MiniCourseSalesProject.Api.Controllers
         public async Task<IActionResult> CourseGet(Guid id)
         {
             var result = await courseService.GetCourseByIdAsync(id);
+            return CreateObjectResult(result);
+        }
+
+
+
+        //Assign Role to User
+        [HttpPost("AddRoleToUser")]
+        public async Task<IActionResult> AddRoleToUser(AddRoleToUserRequest addRoleToUserRequest)
+        {
+            var result = await userService.AddRoleToUserAsync(addRoleToUserRequest);
+            return CreateObjectResult(result);
+        }
+
+
+
+
+        // Get to alluser
+        [HttpGet("AllUser")]
+        public async Task<IActionResult> Get()
+        {
+            var result = await userService.Get();
             return CreateObjectResult(result);
         }
     }

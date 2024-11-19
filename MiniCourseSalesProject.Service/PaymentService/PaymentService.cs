@@ -8,7 +8,7 @@ using System.Net;
 
 namespace MiniCourseSalesProject.Service.PaymentService
 {
-    public class PaymentService(IOrderRepository orderRepository, IPaymentRepository paymentRepository, UserManager<AppUser> userManager, IUnitOfWork unitOfWork)
+    public class PaymentService(IOrderRepository orderRepository, IPaymentRepository paymentRepository, UserManager<AppUser> userManager, IUnitOfWork unitOfWork) : IPaymentService
     {
 
         public async Task<ServiceResult<PaymentDto>> ProcessPaymentAsync(PaymentCreateRequest request)

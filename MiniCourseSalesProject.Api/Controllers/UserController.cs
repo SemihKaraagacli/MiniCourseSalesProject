@@ -15,12 +15,6 @@ namespace MiniCourseSalesProject.Api.Controllers
             var result = await userService.SignUp(signUpRequest);
             return CreateObjectResult(result);
         }
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var result = await userService.Get();
-            return CreateObjectResult(result);
-        }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
