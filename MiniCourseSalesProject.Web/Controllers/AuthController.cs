@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MiniCourseSalesProject.Web.Models;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MiniCourseSalesProject.Web.Models.Services;
 using MiniCourseSalesProject.Web.Models.ViewModels;
 
 namespace MiniCourseSalesProject.Web.Controllers
@@ -23,7 +25,33 @@ namespace MiniCourseSalesProject.Web.Controllers
                 }
                 return View();
             }
+            return RedirectToAction("Index", "Home");
+        }
 
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignUpAsync(SignUpViewModel viewModel)
+        {
+            var response = await authService.SignUpAsync(viewModel);
+
+            if (response.IsError)
+            {
+                foreach (var error in response.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult SignOut()
+        {
+            HttpContext.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
         }

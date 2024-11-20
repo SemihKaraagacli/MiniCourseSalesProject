@@ -1,37 +1,36 @@
-/* Genel düzenlemeler */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Sağ kaymayı engelle */
+body {
+    background-color: #343a40;
+    color: white;
 }
 
-/* Sepet butonunun ve kullanıcı dropdown menüsünün konumlandırılması */
-.navbar-nav {
-    margin-right: 0;
-}
-
+/* Navbar'ın koyu tasarımı */
 .navbar {
-    margin-bottom: 0;
+    background-color: #212529;
 }
 
-.container {
-    padding-left: 15px;
-    padding-right: 15px;
+/* Footer'ın sabit olması */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #212529;
+    text-align: center;
+    padding: 10px 0;
+    color: white;
 }
 
-.card img {
-    height: 200px;
-    object-fit: cover;
+/* Sayfa içerikleri için padding */
+.content {
+    padding: 20px;
 }
 
-@media (max-width: 767px) {
-    .card img {
-        height: 150px;
-    }
+.table-container {
+    margin-top: 30px;
+    background-color: #495057;
+    padding: 20px;
+    border-radius: 10px;
 }
 
-#cartItems {
-    max-height: 300px;
-    overflow-y: auto;
+.btn-custom {
+    margin: 0 5px;
 }

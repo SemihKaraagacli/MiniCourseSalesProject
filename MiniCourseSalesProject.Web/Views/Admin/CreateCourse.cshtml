@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model CourseCreateTupleViewModel
+
+<h1>Create to course</h1>
+
+<form asp-controller="Admin" asp-action="CreateCourse" method="post" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label asp-for="Course.Name" class="form-label"></label>
+        <input asp-for="Course.Name" class="form-control" />
+        <span asp-validation-for="Course.Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Course.Description" class="form-label"></label>
+        <input asp-for="Course.Description" class="form-control" />
+        <span asp-validation-for="Course.Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Course.Price" class="form-label"></label>
+        <input asp-for="Course.Price" class="form-control" />
+        <span asp-validation-for="Course.Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Course.CategoryId" class="form-label">Category</label>
+        <select asp-for="Course.CategoryId" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+            <option value="">Select a category</option>
+        </select>
+        <span asp-validation-for="Course.CategoryId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

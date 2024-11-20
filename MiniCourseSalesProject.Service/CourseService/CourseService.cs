@@ -52,21 +52,24 @@ namespace MiniCourseSalesProject.Service.CourseService
         public async Task<ServiceResult<List<CourseDto>>> GetAllCoursesAsync()
         {
             var allCourse = await courseRepository.GetAllAsync();
-            var courseToDto = allCourse.Select(x =>
-            {
-                var category = categoryRepository.GetByIdAsync(x.CategoryId).Result;
-                return new CourseDto
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                    Price = x.Price,
-                    CategoryName = x.Category.Name,
-                    CreatedDate = x.CreatedDate,
-                    UpdatedDate = x.UpdatedDate,
 
-                };
-            }).ToList();
+            var courseToDto = new List<CourseDto>();
+
+            foreach (var course in allCourse)
+            {
+                var category = await categoryRepository.GetByIdAsync(course.CategoryId);
+                courseToDto.Add(new CourseDto
+                {
+                    Id = course.Id,
+                    Name = course.Name,
+                    Description = course.Description,
+                    Price = course.Price,
+                    CategoryName = category.Name,
+                    CreatedDate = course.CreatedDate,
+                    UpdatedDate = course.UpdatedDate,
+                });
+            }
+
             return ServiceResult<List<CourseDto>>.Success(courseToDto, HttpStatusCode.OK);
 
         }

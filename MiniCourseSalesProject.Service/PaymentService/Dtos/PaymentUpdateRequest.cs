@@ -5,6 +5,6 @@ namespace MiniCourseSalesProject.Service.PaymentService.Dtos
     public class PaymentUpdateRequest
     {
         public Guid Id { get; set; }
-        public PaymentStatus PaymentStatus { get; set; }
+        public string PaymentStatus { get; set; }
     }
 }

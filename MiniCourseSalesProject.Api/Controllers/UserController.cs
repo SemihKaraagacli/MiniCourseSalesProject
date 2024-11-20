@@ -15,13 +15,13 @@ namespace MiniCourseSalesProject.Api.Controllers
             var result = await userService.SignUp(signUpRequest);
             return CreateObjectResult(result);
         }
-        [HttpGet("{id}")]
+        [HttpGet("/{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await userService.Get(id);
             return CreateObjectResult(result);
         }
-        [HttpDelete]
+        [HttpDelete("/User/{Id}")]
         public async Task<IActionResult> Delete(Guid Id)
         {
             var result = await userService.Delete(Id);

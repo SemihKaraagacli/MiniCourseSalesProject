@@ -1,0 +1,60 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-controller="Admin" asp-action="Index">Admin Panel</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Course
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="AllCourse">All courses</a></li>
+                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="CreateCourse">Add to course</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Category
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="AllCategory">All categories</a></li>
+                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="CreateCategory">Add to category</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Order
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="AllOrder">All orders</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        User
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="AllUser">All users</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <button class="btn btn-outline-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Admin
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Sale Page</a></li>
+                    <li><a class="dropdown-item" asp-controller="Auth" asp-action="SignOut">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+

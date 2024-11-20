@@ -1,12 +1,5 @@
 ﻿namespace MiniCourseSalesProject.Repository.Entities
 {
-    public enum OrderStatus
-    {
-        Pending,    // Sipariş bekliyor
-        Completed,  // Sipariş tamamlandı
-        Failed,     // Sipariş başarısız
-        Canceled    // Sipariş iptal edildi
-    }
     public class Order
     {
         public Guid Id { get; set; }
@@ -15,7 +8,7 @@
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public decimal TotalAmount { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public string OrderStatus { get; set; }
 
         // İlişkiler
         public AppUser User { get; set; }

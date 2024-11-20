@@ -7,15 +7,15 @@ using MiniCourseSalesProject.Web.Models.Dtos;
 using MiniCourseSalesProject.Web.Models.ViewModels;
 using System.Security.Claims;
 
-namespace MiniCourseSalesProject.Web.Models
+namespace MiniCourseSalesProject.Web.Models.Services
 {
-    public class AuthService(HttpClient client, IHttpContextAccessor httpContextAccessor)
+    public class AuthService(HttpClient client, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
     {
         public async Task<ServiceResult> SignInAsync(SignInViewModel viewModel)
         {
             var adress = "/Auth/signin";
 
-            var response = await client.PostAsJsonAsync<SignInViewModel>(adress, viewModel);  //Fecth
+            var response = await client.PostAsJsonAsync(adress, viewModel);  //Fecth
 
             if (!response.IsSuccessStatusCode)
             {
@@ -47,6 +47,34 @@ namespace MiniCourseSalesProject.Web.Models
 
 
             return ServiceResult.Success();
+        }
+        public async Task<ServiceResult<SignInResponse>> GetClientCredentialToken()
+        {
+            var crientialTokenAdress = "/Auth/SignInClientCredential";
+
+            var crientialTokenRequestModel = new WebClientCredentialRequest(configuration.GetSection("Clients")["ClientId"]!, configuration.GetSection("Clients")["ClientSecret"]!);
+
+            var crientialTokenResponse = await client.PostAsJsonAsync(crientialTokenAdress, crientialTokenRequestModel);
+
+            if (!crientialTokenResponse.IsSuccessStatusCode)
+            {
+                return ServiceResult<SignInResponse>.Fail("Client Credential Token not received.");
+            }
+            var signInResponse = await crientialTokenResponse.Content.ReadFromJsonAsync<SignInResponse>();
+            return ServiceResult<SignInResponse>.Success(signInResponse!);
+        }
+        public async Task<ServiceResult> SignUpAsync(SignUpViewModel viewModelmodel)
+        {
+            var adress = "/User";
+            var response = await client.PostAsJsonAsync(adress, viewModelmodel);
+            if (!response.IsSuccessStatusCode)
+            {
+                var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+                return ServiceResult.Fail(problemDetails!.Detail!);
+            }
+            var signUpResponse = await response.Content.ReadAsStringAsync();
+            return ServiceResult.Success();
+
         }
     }
 }

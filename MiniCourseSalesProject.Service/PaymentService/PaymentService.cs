@@ -42,10 +42,10 @@ namespace MiniCourseSalesProject.Service.PaymentService
                 Amount = orderAmount,
                 OrderId = request.OrderId,
                 PaymentDate = DateTime.UtcNow,
-                PaymentStatus = PaymentStatus.Completed,
+                PaymentStatus = "Completed",
             };
             await paymentRepository.AddAsync(newPayment);
-            hasOrder.OrderStatus = OrderStatus.Completed;
+            hasOrder.OrderStatus = "Completed";
             orderRepository.Update(hasOrder);
             var moneyLeft = userWallet - orderAmount;
             hasUser.Wallet = moneyLeft;

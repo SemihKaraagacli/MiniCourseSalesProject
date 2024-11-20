@@ -44,7 +44,7 @@ namespace MiniCourseSalesProject.Service.OrderService
                 UpdatedDate = DateTime.UtcNow,
                 Courses = orderedCourse,
                 CourseId = request.CourseId.ToList(),
-                OrderStatus = OrderStatus.Pending,
+                OrderStatus = "Waiting",
             };
             await orderRepository.AddAsync(newOrder);
             await unitOfWork.CommitAsync();
@@ -54,7 +54,7 @@ namespace MiniCourseSalesProject.Service.OrderService
                 CreatedDate = newOrder.CreatedDate,
                 UpdatedDate = newOrder.UpdatedDate,
                 TotalAmount = newOrder.TotalAmount,
-                Status = OrderStatus.Pending,
+                Status = newOrder.OrderStatus,
             };
             return ServiceResult<Guid>.Success(orderToDTo.Id, HttpStatusCode.OK);
         }

@@ -1,58 +1,20 @@
 ﻿<!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurslar Sayfası</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <partial name="_ImportPartial"/>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Kurslar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Ana Sayfa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Adresler</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <button class="btn btn-outline-success me-2" type="button" id="viewCartBtn" data-bs-toggle="modal" data-bs-target="#cartModal">Sepetim (0)</button>
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            Kullanıcı
-                        </button>
-                       @if(!User.Identity.IsAuthenticated){
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" asp-controller="Auth" asp-action="SignIn">Giriş Yap</a></li>
-                                <li><a class="dropdown-item" href="#">Kayıt Ol</a></li>
-                            </ul>
-                        }
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <h1>@User.Identity.Name</h1>
-                                <li><a class="dropdown-item" asp-controller="User" asp-action="Index">Profil</a></li>
-                                <li><a class="dropdown-item" href="#">Sign Out</a></li>
-                            </ul>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <div class="container text-center mt-5">
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    
+    <partial name="_NavbarPartial" />
+    <!-- Main Content -->
+    <div class="container mt-5 flex-grow-1">
         @RenderBody()
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-    <script src="/js/script.js"></script>
+
+    <!-- Footer -->
+    <partial name="_FooterPartial" />
+    <partial name="_ImportJsPartial" />
+    
 </body>
 </html>

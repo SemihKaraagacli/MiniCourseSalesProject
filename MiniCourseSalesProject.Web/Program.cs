@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
-using MiniCourseSalesProject.Web.Models;
+using MiniCourseSalesProject.Web.Models.Handler;
+using MiniCourseSalesProject.Web.Models.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
+//þifreleme anahtarýný buraya kaydet
 builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Key"))).SetDefaultKeyLifetime(TimeSpan.FromDays(30));
-
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
@@ -17,14 +18,38 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.Name = "Mini_Course_Cookie";
         options.ExpireTimeSpan = TimeSpan.FromDays(30);
         options.LoginPath = "/Auth/SignIn";
-        //options.AccessDeniedPath = "/Home/AccessDenied";
+        options.AccessDeniedPath = "/Home/AccessDenied";
     });
+
+builder.Services.AddAuthorization();
+
+
+
 builder.Services.AddHttpClient<AuthService>(x =>
 {
     x.BaseAddress = new Uri(builder.Configuration.GetSection("ApiOption")["BaseAdress"]!);
 });
+builder.Services.AddHttpClient<CourseService>(x =>
+{
+    x.BaseAddress = new Uri(builder.Configuration.GetSection("ApiOption")["BaseAdress"]!);
+}).AddHttpMessageHandler<ClientCredentialHandler>();
+builder.Services.AddHttpClient<CategoryService>(x =>
+{
+    x.BaseAddress = new Uri(builder.Configuration.GetSection("ApiOption")["BaseAdress"]!);
+}).AddHttpMessageHandler<ClientCredentialHandler>();
+builder.Services.AddHttpClient<UserService>(x =>
+{
+    x.BaseAddress = new Uri(builder.Configuration.GetSection("ApiOption")["BaseAdress"]!);
+}).AddHttpMessageHandler<ClientCredentialHandler>();
+builder.Services.AddHttpClient<OrderService>(x =>
+{
+    x.BaseAddress = new Uri(builder.Configuration.GetSection("ApiOption")["BaseAdress"]!);
+}).AddHttpMessageHandler<ClientCredentialHandler>();
 
 
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<ClientCredentialHandler>();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 

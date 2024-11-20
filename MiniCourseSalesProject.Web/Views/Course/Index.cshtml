@@ -1,0 +1,32 @@
+﻿<div class="container mb-3">
+    <form class="row g-3">
+        <div class="col-md-4">
+            <label for="categoryFilter" class="form-label">Kategori Seç</label>
+            <select class="form-select" id="categoryFilter" onchange="filterCourses()">
+                <option value="">Tümü</option>
+                <option value="teknoloji">Teknoloji</option>
+                <option value="dil">Dil</option>
+                <option value="tasarim">Tasarım</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="searchFilter" class="form-label">Kurs Adı Ara</label>
+            <input type="text" class="form-control" id="searchFilter" onkeyup="filterCourses()" placeholder="Kurs adı girin">
+        </div>
+    </form>
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="card h-100">
+            <img src="https://via.placeholder.com/150" class="card-img-top" alt="Kurs 1">
+            <div class="card-body">
+                <h5 class="card-title">Kurs 1</h5>
+                <p class="card-text">Bu kurs hakkında kısa bir açıklama.</p>
+                <button class="btn btn-primary">Düzenle</button>
+            </div>
+        </div>
+    </div>
+    
+</div>

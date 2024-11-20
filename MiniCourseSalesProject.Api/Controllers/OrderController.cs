@@ -18,7 +18,7 @@ namespace MiniCourseSalesProject.Api.Controllers
             var result = await orderService.UpdateOrderAsync(orderUpdateRequest);
             return CreateObjectResult(result);
         }
-        [HttpDelete]
+        [HttpDelete("/order/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await orderService.DeleteOrderAsync(id);

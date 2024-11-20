@@ -81,6 +81,8 @@ namespace MiniCourseSalesProject.Service.CategoryService
             }
             hasCategory.Name = request.Name;
             hasCategory.UpdatedDate = DateTime.UtcNow;
+            categoryRepository.Update(hasCategory);
+            await unitOfWork.CommitAsync();
             return ServiceResult.Success(HttpStatusCode.OK);
         }
 

@@ -1,0 +1,63 @@
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">MainPage</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" asp-controller="Course" asp-action="Index">Courses</a></li>
+            </ul>
+            <div class="d-flex align-items-center">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button class="btn btn-outline-success me-2" type="button" id="viewCartBtn" data-bs-toggle="modal" data-bs-target="#cartModal">Sepetim (0)</button>
+                    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="cartModalLabel">Sepetim</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul id="cartItems" class="list-group">
+                                        <!-- Sepet elemanları buraya eklenecek -->
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="payment.html" class="btn btn-success">Ödemeye Git</a>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        Kullanıcı
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="SignIn">Sign In</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="SignUp">Sign Up</a></li>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li style="text-align:center">@User.Identity.Name</li>
+                            <li><a class="dropdown-item" asp-controller="" asp-action="">Profile</a></li>
+                            <li><a class="dropdown-item" asp-controller="" asp-action="">Orders</a></li>
+                            <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Admin Page</a></li>
+
+
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="signOut">Sign Out</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

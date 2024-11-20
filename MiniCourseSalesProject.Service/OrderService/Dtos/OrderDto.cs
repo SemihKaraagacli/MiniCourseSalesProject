@@ -10,6 +10,6 @@ namespace MiniCourseSalesProject.Service.OrderService.Dtos
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public decimal TotalAmount { get; set; }
-        public OrderStatus Status { get; set; }
+        public string Status { get; set; }
     }
 }
