@@ -123,7 +123,7 @@ namespace MiniCourseSalesProject.Web.Controllers
                     return View();
                 }
             }
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("AllCourse", "Admin");
         }
         [HttpGet]
         public async Task<IActionResult> UpdateCourse(Guid id)

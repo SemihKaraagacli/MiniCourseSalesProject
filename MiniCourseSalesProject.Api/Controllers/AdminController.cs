@@ -84,6 +84,12 @@ namespace MiniCourseSalesProject.Api.Controllers
             var result = await courseService.GetCourseByIdAsync(id);
             return CreateObjectResult(result);
         }
+        [HttpGet("/course/GetCoursesByCategoryAsync/{categoryId}")]
+        public async Task<IActionResult> GetCoursesByCategoryAsync(Guid categoryId)
+        {
+            var result = await courseService.GetCoursesByCategoryAsync(categoryId);
+            return CreateObjectResult(result);
+        }
 
 
 

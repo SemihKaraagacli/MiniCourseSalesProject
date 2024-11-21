@@ -5,6 +5,6 @@ namespace MiniCourseSalesProject.Repository.CourseRepository
 {
     public interface ICourseRepository : IGenericRepository<Course>
     {
-        Task<List<Course>> GetCoursesByCategoryAsync(Guid categoryId);
+        Task<List<Course>> GetCoursesByCategory(Guid categoryId);
     }
 }

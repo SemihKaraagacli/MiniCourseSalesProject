@@ -13,7 +13,7 @@ namespace MiniCourseSalesProject.Repository.CourseRepository
         }
 
         // Kategoriye göre kursları getir
-        public async Task<List<Course>> GetCoursesByCategoryAsync(Guid categoryId)
+        public async Task<List<Course>> GetCoursesByCategory(Guid categoryId)
         {
             return await _context.Courses.Where(c => c.CategoryId == categoryId).ToListAsync();
         }

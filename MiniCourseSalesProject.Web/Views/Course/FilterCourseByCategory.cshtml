@@ -1,0 +1,35 @@
+﻿@model CourseByCategoryResponseViewModel
+
+<div class="container mb-3">
+    <form asp-controller="Course" asp-action="FilterCourseByCategory" method="get" class="row g-3">
+        <div class="col-md-5">
+            <select asp-for="categoryId" class="form-select" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                <option value="">Select a category</option>
+            </select>
+        </div>
+        <div class="col-md-5">
+            <button type="submit" id="searchFilter" class="btn btn-primary w-100">Filter</button>
+        </div>
+    </form>
+</div>
+@if (Model.Courses != null && Model.Courses.Any())
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model.Courses)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Kurs 1">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text">@item.Price₺</p>
+                        <button class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+}
+

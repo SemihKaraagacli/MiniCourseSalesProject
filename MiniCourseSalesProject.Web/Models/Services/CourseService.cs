@@ -81,5 +81,31 @@ namespace MiniCourseSalesProject.Web.Models.Services
             var responseData = await response.Content.ReadAsStringAsync();
             return ServiceResult.Success();
         }
+        public async Task<ServiceResult<List<CourseResponse>>> GetCoursesByCategory(Guid? categoryId)
+        {
+            if (categoryId == Guid.Empty)
+            {
+                var address = "/Admin/Course";
+
+
+                var responseAll = await client.GetAsync(address);
+                if (!responseAll.IsSuccessStatusCode)
+                {
+                    var problemDetails = await responseAll.Content.ReadFromJsonAsync<ProblemDetails>();
+                    return ServiceResult<List<CourseResponse>>.Fail(problemDetails!.Detail!);
+                }
+                var responseAllData = await responseAll.Content.ReadFromJsonAsync<List<CourseResponse>>();
+                return ServiceResult<List<CourseResponse>>.Success(responseAllData);
+            }
+            var adress = $"/course/GetCoursesByCategoryAsync/{categoryId}";
+            var response = await client.GetAsync(adress);
+            if (!response.IsSuccessStatusCode)
+            {
+                var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+                return ServiceResult<List<CourseResponse>>.Fail(problemDetails!.Detail!);
+            }
+            var responseData = await response.Content.ReadFromJsonAsync<List<CourseResponse>>();
+            return ServiceResult<List<CourseResponse>>.Success(responseData);
+        }
     }
 }

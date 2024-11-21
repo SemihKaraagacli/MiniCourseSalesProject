@@ -113,9 +113,32 @@ namespace MiniCourseSalesProject.Service.CourseService
             return ServiceResult.Success(HttpStatusCode.OK);
         }
 
-        public Task<ServiceResult<List<CourseDto>>> GetCoursesByCategoryAsync(Guid categoryId)
+        public async Task<ServiceResult<List<CourseDto>>> GetCoursesByCategoryAsync(Guid categoryId)
         {
-            throw new NotImplementedException();
+            var courseByCategory = await courseRepository.GetCoursesByCategory(categoryId);
+            if (courseByCategory is null)
+            {
+                return ServiceResult<List<CourseDto>>.Fail("Course not found.", HttpStatusCode.NotFound);
+            }
+            var courseToDto = new List<CourseDto>();
+            foreach (var course in courseByCategory)
+            {
+                var category = await categoryRepository.GetByIdAsync(course.CategoryId);
+                courseToDto.Add(new CourseDto
+                {
+                    Id = course.Id,
+                    Name = course.Name,
+                    Description = course.Description,
+                    Price = course.Price,
+                    CategoryName = category.Name,
+                    CreatedDate = course.CreatedDate,
+                    UpdatedDate = course.UpdatedDate,
+                });
+            }
+
+
+
+            return ServiceResult<List<CourseDto>>.Success(courseToDto, HttpStatusCode.OK);
         }
 
         public async Task<ServiceResult> DeleteCourseAsync(Guid courseId)
