@@ -1,0 +1,45 @@
+﻿@model List<OrderResponse>
+
+
+
+<h2 class="text-center mb-4">Siparişlerim</h2>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.CreatedDate</td>
+                    <td>
+                        <span class="badge @(item.Status == "Completed" ? "bg-success" : "bg-warning")">
+                            @item.Status
+                        </span>
+                    </td>
+                    <td>@item.TotalAmount</td>
+                    <td>
+                        @if (item.Status == "Completed")
+                        {
+                            <button class="btn btn-secondary" disabled>Passive</button>
+                        }
+                        else if (item.Status == "Waiting")
+                        {
+
+                            <form asp-controller="Order" asp-action="GetOrderById" asp-route-id="@item.Id" method="get">
+                                <input type="hidden" name="orderId" value="@item.Id" />
+                                <button class="btn btn-primary">Go to Order</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

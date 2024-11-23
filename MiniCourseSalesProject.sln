@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniCourseSalesProject.Repo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniCourseSalesProject.Service", "MiniCourseSalesProject.Service\MiniCourseSalesProject.Service.csproj", "{AFE2ADAC-3053-4AE4-8342-E1B98DF9D48A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniCourseSalesProject.Web", "MiniCourseSalesProject.Web\MiniCourseSalesProject.Web.csproj", "{F3083C0D-81D6-4135-9DE8-559206B14EE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniCourseSalesProject.Web", "MiniCourseSalesProject.Web\MiniCourseSalesProject.Web.csproj", "{F3083C0D-81D6-4135-9DE8-559206B14EE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

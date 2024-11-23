@@ -1,11 +1,12 @@
 ﻿using MiniCourseSalesProject.Repository.Entities;
+using MiniCourseSalesProject.Service.BasketService.Dtos;
 
 namespace MiniCourseSalesProject.Service.OrderService.Dtos
 {
-    public record OrderDto
+    public class OrderDto
     {
         public Guid Id { get; set; }
-        public List<Guid> CourseIds { get; set; }
+        public List<BasketItemInCourseResponse> BasketItemInCourseResponses { get; set; }
         public Guid UserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }

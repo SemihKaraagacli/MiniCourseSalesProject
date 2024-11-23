@@ -1,7 +1,5 @@
 ﻿namespace MiniCourseSalesProject.Repository.Entities
 {
-
-
     public class Payment
     {
         public Guid Id { get; set; }
@@ -11,6 +9,6 @@
         public decimal Amount { get; set; }
 
         // İlişkiler
-        public virtual Order Order { get; set; }
+        public Order Order { get; set; }
     }
 }

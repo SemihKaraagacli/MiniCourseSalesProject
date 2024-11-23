@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiniCourseSalesProject.Repository;
+using MiniCourseSalesProject.Repository.BasketItemRepository;
+using MiniCourseSalesProject.Repository.BasketRepository;
 using MiniCourseSalesProject.Repository.CategoryRepository;
 using MiniCourseSalesProject.Repository.CourseRepository;
 using MiniCourseSalesProject.Repository.Entities;
@@ -10,6 +12,7 @@ using MiniCourseSalesProject.Repository.OrderRepository;
 using MiniCourseSalesProject.Repository.PaymentRepository;
 using MiniCourseSalesProject.Repository.UnitOfWork;
 using MiniCourseSalesProject.Service.Auth;
+using MiniCourseSalesProject.Service.BasketService;
 using MiniCourseSalesProject.Service.CategoryService;
 using MiniCourseSalesProject.Service.CourseService;
 using MiniCourseSalesProject.Service.OrderService;
@@ -38,6 +41,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<IBasketItemRepository, BasketItemRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
@@ -48,6 +53,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //Token Check

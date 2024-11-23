@@ -203,7 +203,7 @@ namespace MiniCourseSalesProject.Web.Controllers
                     return View();
                 }
             }
-            return View(response.Data);
+            return View();
         }
 
         [HttpPost("/order")]

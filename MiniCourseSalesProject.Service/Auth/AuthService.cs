@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MiniCourseSalesProject.Repository.Entities;
+using MiniCourseSalesProject.Repository.OrderRepository;
 using MiniCourseSalesProject.Service.Auth.Dtos;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace MiniCourseSalesProject.Service.Auth
 {
-    public class AuthService(UserManager<AppUser> userManager, IConfiguration configuration) : IAuthService
+    public class AuthService(UserManager<AppUser> userManager, IOrderRepository orderRepository, IConfiguration configuration) : IAuthService
     {
         public async Task<ServiceResult<TokenResponse>> SignInAsync(SignInRequest signInRequest)
         {
@@ -32,6 +33,9 @@ namespace MiniCourseSalesProject.Service.Auth
             userClaims.Add(new Claim(ClaimTypes.Name, hasUser.UserName));
             userClaims.Add(new Claim(ClaimTypes.Email, hasUser.Email));
             userClaims.Add(new Claim("token_id", Guid.NewGuid().ToString()));
+            userClaims.Add(new Claim("Wallet", hasUser.Wallet.ToString()));
+
+
 
             var roles = await userManager.GetRolesAsync(hasUser);
             foreach (var role in roles)

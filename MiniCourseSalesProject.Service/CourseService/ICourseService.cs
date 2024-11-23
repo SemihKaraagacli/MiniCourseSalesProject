@@ -11,11 +11,5 @@ namespace MiniCourseSalesProject.Service.CourseService
         Task<ServiceResult> DeleteCourseAsync(Guid courseId);
         Task<ServiceResult<List<CourseDto>>> GetCoursesByCategoryAsync(Guid categoryId);
 
-
-        //Task<ServiceResult<Guid>> Create(CourseCreateRequest courseCreateRequest);
-        //Task<ServiceResult> Delete(Guid id);
-        //Task<ServiceResult<List<CourseDto>>> Get();
-        //Task<ServiceResult<CourseDto>> Get(Guid id);
-        //Task<ServiceResult> Update(Guid Id, CourseUpdateRequest courseUpdateRequest);
     }
 }

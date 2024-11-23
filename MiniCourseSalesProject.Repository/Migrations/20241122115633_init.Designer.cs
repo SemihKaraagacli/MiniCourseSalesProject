@@ -12,8 +12,8 @@ using MiniCourseSalesProject.Repository;
 namespace MiniCourseSalesProject.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241118153608_entityUpdate")]
-    partial class entityUpdate
+    [Migration("20241122115633_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,21 +24,6 @@ namespace MiniCourseSalesProject.Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CourseOrder", b =>
-                {
-                    b.Property<Guid>("CoursesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OrdersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CoursesId", "OrdersId");
-
-                    b.HasIndex("OrdersId");
-
-                    b.ToTable("OrdersCourses", (string)null);
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
@@ -241,6 +226,46 @@ namespace MiniCourseSalesProject.Repository.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.Basket", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Baskets");
+                });
+
+            modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.BasketItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BasketId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasketId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("BasketItems");
+                });
+
             modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -302,15 +327,15 @@ namespace MiniCourseSalesProject.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CourseId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("BasketId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasPrecision(18, 2)
@@ -323,6 +348,9 @@ namespace MiniCourseSalesProject.Repository.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BasketId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -345,8 +373,9 @@ namespace MiniCourseSalesProject.Repository.Migrations
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -354,21 +383,6 @@ namespace MiniCourseSalesProject.Repository.Migrations
                         .IsUnique();
 
                     b.ToTable("Payments");
-                });
-
-            modelBuilder.Entity("CourseOrder", b =>
-                {
-                    b.HasOne("MiniCourseSalesProject.Repository.Entities.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MiniCourseSalesProject.Repository.Entities.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -422,6 +436,36 @@ namespace MiniCourseSalesProject.Repository.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.Basket", b =>
+                {
+                    b.HasOne("MiniCourseSalesProject.Repository.Entities.AppUser", "User")
+                        .WithMany("Baskets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.BasketItem", b =>
+                {
+                    b.HasOne("MiniCourseSalesProject.Repository.Entities.Basket", "Basket")
+                        .WithMany("BasketItems")
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MiniCourseSalesProject.Repository.Entities.Course", "Course")
+                        .WithMany("BasketItems")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basket");
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.Course", b =>
                 {
                     b.HasOne("MiniCourseSalesProject.Repository.Entities.Category", "Category")
@@ -435,11 +479,19 @@ namespace MiniCourseSalesProject.Repository.Migrations
 
             modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.Order", b =>
                 {
+                    b.HasOne("MiniCourseSalesProject.Repository.Entities.Basket", "Basket")
+                        .WithOne("Order")
+                        .HasForeignKey("MiniCourseSalesProject.Repository.Entities.Order", "BasketId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("MiniCourseSalesProject.Repository.Entities.AppUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Basket");
 
                     b.Navigation("User");
                 });
@@ -457,12 +509,27 @@ namespace MiniCourseSalesProject.Repository.Migrations
 
             modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.AppUser", b =>
                 {
+                    b.Navigation("Baskets");
+
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.Basket", b =>
+                {
+                    b.Navigation("BasketItems");
+
+                    b.Navigation("Order")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.Category", b =>
                 {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.Course", b =>
+                {
+                    b.Navigation("BasketItems");
                 });
 
             modelBuilder.Entity("MiniCourseSalesProject.Repository.Entities.Order", b =>

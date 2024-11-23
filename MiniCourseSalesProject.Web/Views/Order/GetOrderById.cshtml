@@ -1,0 +1,86 @@
+﻿@model OrderResponse
+
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Sepetteki Ürünler -->
+        <div class="col-md-6 mb-4">
+            <div class="p-3 border rounded shadow-sm">
+                <h5 class="fw-bold">Sepetinizdeki Ürünler</h5>
+                <ul class="list-group">
+
+                    @foreach (var item in Model?.BasketItemInCourseResponses)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @item.Name
+                            <div class="d-flex align-items-center">
+                                <span class="me-3 badge bg-primary rounded-pill">1 Adet</span>
+                                <span class="fw-bold text-success">@item.Price ₺</span>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+                <hr />
+                <p>Total Amount: <span class="fw-bold text-success">@Model.TotalAmount</span></p>
+                <p>
+                    <strong>User Wallet:</strong>
+                    <span class="fw-bold text-info"> ₺</span>
+                </p>
+                <form asp-controller="Order" asp-action="DeleteOrder" method="post">
+                    <input type="hidden" name="basketItemId" value="@Model.Id" />
+                    <button class="btn btn-danger w-100 mt-2">Order Remove</button>
+                </form>
+                <form asp-controller="Payment" asp-action="PaymentProcesses" method="post">
+                    <input type="hidden" name="basketItemId" value="@Model.Id" />
+                    <input type="hidden" name="UserId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
+                    <button class="btn btn-warning w-100 mt-2">Order Complete</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Fatura Bilgisi -->
+        <div class="col-md-6 mb-4">
+            <div class="p-3 border rounded shadow-sm">
+                <h5 class="fw-bold">Fatura Bilgisi</h5>
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Ad Soyad</label>
+                        <input type="text"
+                               class="form-control"
+                               id="name"
+                               placeholder="Adınız Soyadınız" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Adres</label>
+                        <textarea class="form-control"
+                                  id="address"
+                                  rows="3"
+                                  placeholder="Fatura adresinizi girin"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="city" class="form-label">Şehir</label>
+                        <input type="text"
+                               class="form-control"
+                               id="city"
+                               placeholder="Şehir" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Telefon</label>
+                        <input type="text"
+                               class="form-control"
+                               id="phone"
+                               placeholder="Telefon Numaranız" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-posta</label>
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               placeholder="E-posta Adresiniz" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

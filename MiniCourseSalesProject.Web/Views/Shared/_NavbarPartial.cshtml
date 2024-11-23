@@ -11,26 +11,7 @@
             <div class="d-flex align-items-center">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <button class="btn btn-outline-success me-2" type="button" id="viewCartBtn" data-bs-toggle="modal" data-bs-target="#cartModal">Sepetim (0)</button>
-                    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="cartModalLabel">Sepetim</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <ul id="cartItems" class="list-group">
-                                        <!-- Sepet elemanları buraya eklenecek -->
-                                    </ul>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="payment.html" class="btn btn-success">Ödemeye Git</a>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <a class="btn btn-outline-success me-2" type="button" asp-controller="Basket" asp-action="GetBasket" asp-route-id="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value">Sepetim</a>
                 }
 
                 <div class="dropdown">
@@ -48,7 +29,12 @@
                         {
                             <li style="text-align:center">@User.Identity.Name</li>
                             <li><a class="dropdown-item" asp-controller="" asp-action="">Profile</a></li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action="">Orders</a></li>
+                            <li>
+                                <form asp-controller="Order" asp-action="GetOrderByUserId" method="get">
+                                    <input type="hidden" name="userId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
+                                    <button class="dropdown-item" >Order</button>
+                                </form>
+                            </li>
                             <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Admin Page</a></li>
 
 

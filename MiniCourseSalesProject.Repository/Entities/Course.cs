@@ -13,7 +13,7 @@
         public Guid CategoryId { get; set; }
 
         // Kategori bilgisi
+        public List<BasketItem> BasketItems { get; set; }
         public Category Category { get; set; }
-        public List<Order> Orders { get; set; }
     }
 }

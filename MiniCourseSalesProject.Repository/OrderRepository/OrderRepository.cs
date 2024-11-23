@@ -15,7 +15,7 @@ namespace MiniCourseSalesProject.Repository.OrderRepository
         // Kullanıcıya ait siparişleri getir
         public async Task<List<Order>> GetOrdersByUserIdAsync(Guid userId)
         {
-            return await _context.Orders.Where(o => o.UserId == userId).ToListAsync();
+            return await _context.Orders.Where(o => o.UserId == userId).Include(x => x.User).ToListAsync();
         }
     }
 }

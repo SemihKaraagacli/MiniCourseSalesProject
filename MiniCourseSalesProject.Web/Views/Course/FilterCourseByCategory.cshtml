@@ -15,8 +15,11 @@
 @if (Model.Courses != null && Model.Courses.Any())
 {
     <div class="row row-cols-1 row-cols-md-3 g-4">
+        @{
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        }
         @foreach (var item in Model.Courses)
-        {
+        { 
             <div class="col">
                 <div class="card h-100">
                     <img src="https://via.placeholder.com/150" class="card-img-top" alt="Kurs 1">
@@ -24,7 +27,11 @@
                         <h5 class="card-title">@item.Name</h5>
                         <p class="card-text">@item.Description</p>
                         <p class="card-text">@item.Price₺</p>
-                        <button class="btn btn-primary">Add</button>
+                        <form asp-controller="Basket" asp-action="CreateBasket" method="post">
+                            <input type="hidden" name="courseId" value="@item.Id" />
+                            <input type="hidden" name="userId" value="@userId" />
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
                     </div>
                 </div>
             </div>

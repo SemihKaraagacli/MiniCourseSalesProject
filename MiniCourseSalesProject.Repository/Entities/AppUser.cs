@@ -6,5 +6,6 @@ namespace MiniCourseSalesProject.Repository.Entities
     {
         public decimal Wallet { get; set; }
         public List<Order> Orders { get; set; }
+        public List<Basket> Baskets { get; set; }
     }
 }
