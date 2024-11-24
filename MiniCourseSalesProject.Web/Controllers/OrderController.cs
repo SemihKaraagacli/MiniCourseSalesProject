@@ -56,7 +56,7 @@ namespace MiniCourseSalesProject.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteToOrder(Guid OrderId,Guid userId)
+        public async Task<IActionResult> DeleteToOrder(Guid OrderId, Guid userId)
         {
             var response = await orderService.DeleteOrder(OrderId);
             if (response.IsError)
@@ -64,7 +64,7 @@ namespace MiniCourseSalesProject.Web.Controllers
                 foreach (var error in response.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error);
-                    return RedirectToAction("GetOrderByUserId", "Order", new { UserId =userId});
+                    return RedirectToAction("GetOrderByUserId", "Order", new { UserId = userId });
                 }
             }
             return RedirectToAction("Index", "Home");

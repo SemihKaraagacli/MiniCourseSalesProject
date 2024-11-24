@@ -7,7 +7,7 @@ using MiniCourseSalesProject.Service.OrderService.Dtos;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
-    public class OrderController(IOrderService orderService, IBasketService basketService) : CustomControllerBase
+    public class OrderController(IOrderService orderService, IBasketService basketService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
         [HttpPost]
         public async Task<IActionResult> Create(OrderCreateRequest orderCreateRequest)

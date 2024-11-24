@@ -1,9 +1,14 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
 using MiniCourseSalesProject.Web.Models.Handler;
 using MiniCourseSalesProject.Web.Models.Services;
+using MiniCourseSalesProject.Web.Models.Validations;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -54,6 +59,8 @@ builder.Services.AddHttpClient<PaymentService>(x =>
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<ClientCredentialHandler>();
 builder.Services.AddProblemDetails();
+builder.Services.AddValidatorsFromAssemblyContaining<SignInValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<SignUpValidator>();
 
 var app = builder.Build();
 

@@ -9,14 +9,8 @@ using MiniCourseSalesProject.Service.User;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
-    public class AdminController(ICategoryService categoryService, ICourseService courseService, UserService userService) : CustomControllerBase
+    public class AdminController(ICategoryService categoryService, ICourseService courseService, UserService userService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
-        // Kategori ekleme silme düzenleme
-        // ürün ekleme silme düzenleme
-        // kullanıcılara role atama
-        // sistemdeki tüm loglar
-        // tüm kullanıcıları getirme
-
 
         //CATEGORY SIDE
         [HttpPost("Category")]

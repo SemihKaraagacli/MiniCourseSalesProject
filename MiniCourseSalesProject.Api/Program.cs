@@ -18,9 +18,15 @@ using MiniCourseSalesProject.Service.CourseService;
 using MiniCourseSalesProject.Service.OrderService;
 using MiniCourseSalesProject.Service.PaymentService;
 using MiniCourseSalesProject.Service.User;
+using NLog.Web;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+builder.Host.UseNLog(); // NLog'u kullanýyoruz
+
 
 /* DB Configuration*/
 builder.Services.AddDbContext<AppDbContext>(options =>

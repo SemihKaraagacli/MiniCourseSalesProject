@@ -4,7 +4,7 @@ using MiniCourseSalesProject.Service.User.Dtos;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
-    public class UserController(UserService userService) : CustomControllerBase
+    public class UserController(UserService userService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
 
         //user ekleme silme güncelleme görüntüleme
