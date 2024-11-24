@@ -25,14 +25,15 @@
                 <p>Total Amount: <span class="fw-bold text-success">@Model.TotalAmount</span></p>
                 <p>
                     <strong>User Wallet:</strong>
-                    <span class="fw-bold text-info"> ₺</span>
+                    <span class="fw-bold text-info">@Model.Wallet ₺</span>
                 </p>
-                <form asp-controller="Order" asp-action="DeleteOrder" method="post">
-                    <input type="hidden" name="basketItemId" value="@Model.Id" />
+                <form asp-controller="Order" asp-action="DeleteToOrder" method="post">
+                    <input type="hidden" name="OrderId" value="@Model.Id" />
+                    <input type="hidden" name="userId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
                     <button class="btn btn-danger w-100 mt-2">Order Remove</button>
                 </form>
-                <form asp-controller="Payment" asp-action="PaymentProcesses" method="post">
-                    <input type="hidden" name="basketItemId" value="@Model.Id" />
+                <form asp-controller="Payment" asp-action="PaymentProcess" method="post">
+                    <input type="hidden" name="OrderId" value="@Model.Id" />
                     <input type="hidden" name="UserId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
                     <button class="btn btn-warning w-100 mt-2">Order Complete</button>
                 </form>

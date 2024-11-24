@@ -9,7 +9,7 @@ using System.Net;
 
 namespace MiniCourseSalesProject.Service.User
 {
-    public class UserService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IOrderRepository orderRepository)
+    public class UserService(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IOrderRepository orderRepository)
     {
         public async Task<ServiceResult<Guid>> SignUp(SignUpRequest signUpRequest)
         {
@@ -123,24 +123,39 @@ namespace MiniCourseSalesProject.Service.User
 
 
 
-        public async Task<ServiceResult> AddRoleToUserAsync(AddRoleToUserRequest request)
+        public async Task<ServiceResult> AddRoleToUserAsync(Guid UserId)
         {
-            var hasRole = await roleManager.FindByNameAsync(request.RoleName);
+            //var hasRole = await roleManager.FindByNameAsync(request.RoleName);
+            //if (hasRole is null)
+            //{
+            //    var resultAsRole = await roleManager.CreateAsync(new AppRole() { Name = request.RoleName });
+
+            //    if (!resultAsRole.Succeeded)
+            //    {
+            //        var errorList = resultAsRole.Errors.Select(x => x.Description).ToList();
+            //        return ServiceResult.Fail(errorList, HttpStatusCode.BadRequest);
+            //    }
+            //}
+            var admin = "admin";
+            var hasRole = await roleManager.FindByNameAsync(admin);
             if (hasRole is null)
             {
-                var resultAsRole = await roleManager.CreateAsync(new AppRole() { Name = request.RoleName });
+                var resultAsRole = await roleManager.CreateAsync(new AppRole() { Name = admin });
                 if (!resultAsRole.Succeeded)
                 {
                     var errorList = resultAsRole.Errors.Select(x => x.Description).ToList();
                     return ServiceResult.Fail(errorList, HttpStatusCode.BadRequest);
                 }
             }
-            var hasUser = await userManager.FindByIdAsync(request.userId.ToString());
+
+
+
+            var hasUser = await userManager.FindByIdAsync(UserId.ToString());
             if (hasUser == null)
             {
                 return ServiceResult.Fail("User not found.", HttpStatusCode.NotFound);
             }
-            var result = await userManager.AddToRoleAsync(hasUser, request.RoleName);
+            var result = await userManager.AddToRoleAsync(hasUser, admin);
             if (!result.Succeeded)
             {
                 var errorList = result.Errors.Select(x => x.Description).ToList();

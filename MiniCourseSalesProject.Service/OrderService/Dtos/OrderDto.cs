@@ -7,6 +7,7 @@ namespace MiniCourseSalesProject.Service.OrderService.Dtos
     {
         public Guid Id { get; set; }
         public List<BasketItemInCourseResponse> BasketItemInCourseResponses { get; set; }
+        public decimal Wallet { get; set; }
         public Guid UserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }

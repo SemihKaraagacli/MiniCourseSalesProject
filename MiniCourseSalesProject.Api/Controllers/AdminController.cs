@@ -94,10 +94,10 @@ namespace MiniCourseSalesProject.Api.Controllers
 
 
         //Assign Role to User
-        [HttpPost("AddRoleToUser")]
-        public async Task<IActionResult> AddRoleToUser(AddRoleToUserRequest addRoleToUserRequest)
+        [HttpPost("Admin/AddRoleToUser/{UserId}")]
+        public async Task<IActionResult> AddRoleToUser(Guid UserId)
         {
-            var result = await userService.AddRoleToUserAsync(addRoleToUserRequest);
+            var result = await userService.AddRoleToUserAsync(UserId);
             return CreateObjectResult(result);
         }
 

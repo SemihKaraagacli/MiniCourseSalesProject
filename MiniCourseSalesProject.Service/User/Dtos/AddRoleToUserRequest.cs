@@ -1,4 +1,4 @@
 ﻿namespace MiniCourseSalesProject.Service.User.Dtos
 {
-    public record AddRoleToUserRequest(Guid userId, string RoleName);
+    public record AddRoleToUserRequest(Guid UserId);
 }

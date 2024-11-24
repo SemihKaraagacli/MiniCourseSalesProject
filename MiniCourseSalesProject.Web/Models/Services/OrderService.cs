@@ -29,7 +29,6 @@ namespace MiniCourseSalesProject.Web.Models.Services
                 var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
                 return ServiceResult.Fail(problemDetails!.Detail!);
             }
-            var responseData = await response.Content.ReadAsStringAsync();
             return ServiceResult.Success();
         }
 
@@ -109,6 +108,18 @@ namespace MiniCourseSalesProject.Web.Models.Services
         public async Task<ServiceResult> DeleteToBasketItem(Guid UserId, Guid BasketItemId)
         {
             var address = $"/Basket/DeleteCourseFromBasketAsync/{UserId}/{BasketItemId}"; // API adresi
+            var response = await client.DeleteAsync(address);
+            if (!response.IsSuccessStatusCode)
+            {
+                var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+                return ServiceResult.Fail(problemDetails!.Detail!);
+            }
+            return ServiceResult.Success();
+        }
+
+        public async Task<ServiceResult> DeleteToBasket(Guid BasketId)
+        {
+            var address = $"/Basket/{BasketId}"; // API adresi
             var response = await client.DeleteAsync(address);
             if (!response.IsSuccessStatusCode)
             {

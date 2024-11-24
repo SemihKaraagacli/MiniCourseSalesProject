@@ -1,0 +1,68 @@
+﻿@model PaymentResponse
+@if (Model.PaymentStatus == "Completed")
+{
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card w-100" style="max-width: 500px;">
+            <div class="card-header text-center bg-success text-white">
+                <h2>Payment Failed</h2>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h5 class="fw-bold">Order Number:</h5>
+                    <p>@Model.OrderId</p>
+                </div>
+                <div class="mb-3">
+                    <h5 class="fw-bold">Payment Date:</h5>
+                    <p>@Model.PaymentDate</p>
+                </div>
+                <div class="mb-3">
+                    <h5 class="fw-bold">Payment Status:</h5>
+                    <p class="text-success fw-bold">@Model.PaymentStatus</p>
+                </div>
+                <div class="mb-3">
+                    <h5 class="fw-bold">Amount:</h5>
+                    <p>@Model.Amount</p>
+                </div>
+                <div class="alert alert-success text-center" role="alert">
+                    Your payment has been successfully completed
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary w-100">Back to Homepage</a>
+            </div>
+        </div>
+    </div>
+   
+}
+else
+{
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card w-100" style="max-width: 500px;">
+            <div class="card-header text-center bg-danger text-white">
+                <h2>Payment Failed</h2>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h5 class="fw-bold">Payment Date:</h5>
+                    <p>@Model.PaymentDate</p>
+                </div>
+                <div class="mb-3">
+                    <h5 class="fw-bold">Payment Status:</h5>
+                    <p class="text-danger fw-bold">Failed</p>
+                </div>
+                <div class="mb-3">
+                    <h5 class="fw-bold">Amout:</h5>
+                    <p>@Model.Amount</p>
+                </div>
+                <div class="alert alert-danger text-center" role="alert">
+                    Your payment failed. Please try again or contact our support team.
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-warning w-100 mb-2">Try Again</a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary w-100">Back to Homepage</a>
+            </div>
+        </div>
+    </div>
+}
+

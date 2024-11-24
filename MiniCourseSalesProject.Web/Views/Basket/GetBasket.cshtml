@@ -1,17 +1,11 @@
 ﻿@model List<CourseFromBasketItemResponse>
 
-@{
-    decimal totalAmount = 0;
-    foreach (var price in Model)
-    {
-        totalAmount = totalAmount + price.Price;
-    }
-}
 
 @if (Model == null || Model.Count == null || !Model.Any())
 {
     <p class="text-center text-muted">Sepetiniz boş.</p>
 }
+
 else
 {
     <h1 class="text-center mb-3">My Basket</h1>
@@ -42,6 +36,12 @@ else
         }
     </div>
 
+   
+    decimal totalAmount = 0;
+    foreach (var price in Model)
+    {
+        totalAmount = totalAmount + price.Price;
+    }
 
     <div class="text-end">
         <form asp-controller="Order" asp-action="CreateOrder" method="post">
@@ -53,8 +53,12 @@ else
             <p class="fw-bold">Total:@totalAmount ₺</p>
             <button class="btn btn-primary">Create Order</button>
         </form>
+        <form asp-controller="Basket" asp-action="DeleteBasket" method="post">
+            @foreach (var item in Model)
+            {
+                <input type="hidden" name="BasketId" value="@item.BasketId" />
+            }
+            <button class="btn btn-danger mt-5">Delete Order</button>
+        </form>
     </div>
 }
-
-
-/{basketId}/{orderId}

@@ -50,5 +50,20 @@ namespace MiniCourseSalesProject.Web.Controllers
             }
             return RedirectToAction("GetBasket", "Basket", new { id = UserId });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteBasket(Guid BasketId)
+        {
+            var response = await orderService.DeleteToBasket(BasketId);
+            if (response.IsError)
+            {
+                foreach (var error in response.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                    return RedirectToAction("FilterCourseByCategory", "Course");
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

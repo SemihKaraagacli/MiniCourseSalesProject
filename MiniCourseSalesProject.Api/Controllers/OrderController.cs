@@ -64,8 +64,8 @@ namespace MiniCourseSalesProject.Api.Controllers
             var result = await basketService.GetBasketItemInCourseAsync(UserId);
             return CreateObjectResult(result);
         }
-        [HttpDelete("/Basket")]
-        public async Task<IActionResult> DeleteUpdate(Guid id)
+        [HttpDelete("/Basket/{id}")]
+        public async Task<IActionResult> DeleteBasket(Guid id)
         {
             var result = await basketService.DeleteBasketAsync(id);
             return CreateObjectResult(result);

@@ -11,13 +11,22 @@
             <div class="d-flex align-items-center">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="btn btn-outline-success me-2" type="button" asp-controller="Basket" asp-action="GetBasket" asp-route-id="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value">Sepetim</a>
+                    <a class="btn btn-outline-success me-2" type="button" asp-controller="Basket" asp-action="GetBasket" asp-route-id="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value">My Basket</a>
                 }
 
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        Kullanıcı
+
+
+                    @if(!User.Identity.IsAuthenticated){
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        Auth
                     </button>
+                    }
+                    @if(User.Identity.IsAuthenticated){
+                        <button class="btn btn-secondary dropdown-toggle" style="text-align:center; font-weight:bold; font-size:normal; text-transform:uppercase; text-decoration:underline; type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        @User.Identity.Name
+                    </button>
+                    }
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
                         @if (!User.Identity.IsAuthenticated)
                         {
@@ -27,16 +36,24 @@
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li style="text-align:center">@User.Identity.Name</li>
-                            <li><a class="dropdown-item" asp-controller="" asp-action="">Profile</a></li>
                             <li>
                                 <form asp-controller="Order" asp-action="GetOrderByUserId" method="get">
                                     <input type="hidden" name="userId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
-                                    <button class="dropdown-item" >Order</button>
+                                    <button class="dropdown-item">My Orders</button>
                                 </form>
                             </li>
-                            <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Admin Page</a></li>
 
+                            @if (!User.IsInRole("admin"))
+                            {
+                                <li>
+                                    <form asp-controller="Home" asp-action="AddAdminRole" method="post">
+                                        <input type="hidden" name="UserId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
+                                        <button class="dropdown-item">Add Admin Role</button>
+                                    </form>
+                                </li>
+                            }
+
+                            <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Admin Page</a></li>
 
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" asp-controller="Auth" asp-action="signOut">Sign Out</a></li>

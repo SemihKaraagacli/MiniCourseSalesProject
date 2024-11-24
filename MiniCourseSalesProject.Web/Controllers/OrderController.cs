@@ -55,5 +55,20 @@ namespace MiniCourseSalesProject.Web.Controllers
             return View(response.Data);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteToOrder(Guid OrderId,Guid userId)
+        {
+            var response = await orderService.DeleteOrder(OrderId);
+            if (response.IsError)
+            {
+                foreach (var error in response.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                    return RedirectToAction("GetOrderByUserId", "Order", new { UserId =userId});
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

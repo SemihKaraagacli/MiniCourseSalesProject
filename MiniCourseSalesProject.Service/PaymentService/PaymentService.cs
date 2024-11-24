@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using MiniCourseSalesProject.Repository.BasketItemRepository;
+using MiniCourseSalesProject.Repository.BasketRepository;
 using MiniCourseSalesProject.Repository.Entities;
 using MiniCourseSalesProject.Repository.OrderRepository;
 using MiniCourseSalesProject.Repository.PaymentRepository;
@@ -8,7 +10,7 @@ using System.Net;
 
 namespace MiniCourseSalesProject.Service.PaymentService
 {
-    public class PaymentService(IOrderRepository orderRepository, IPaymentRepository paymentRepository, UserManager<AppUser> userManager, IUnitOfWork unitOfWork) : IPaymentService
+    public class PaymentService(IOrderRepository orderRepository, IPaymentRepository paymentRepository, IBasketItemRepository basketItemRepository, IBasketRepository basketRepository, UserManager<AppUser> userManager, IUnitOfWork unitOfWork) : IPaymentService
     {
 
         public async Task<ServiceResult<PaymentDto>> ProcessPaymentAsync(PaymentCreateRequest request)
@@ -44,12 +46,25 @@ namespace MiniCourseSalesProject.Service.PaymentService
                 PaymentDate = DateTime.UtcNow,
                 PaymentStatus = "Completed",
             };
+
+
+            var basket = await basketRepository.GetByIdAsync(hasOrder.BasketId);
+            var basketItem = await basketItemRepository.GetItemsByBasketIdAsync(hasOrder.BasketId);
+
+
+
             await paymentRepository.AddAsync(newPayment);
+
             hasOrder.OrderStatus = "Completed";
             orderRepository.Update(hasOrder);
+
             var moneyLeft = userWallet - orderAmount;
             hasUser.Wallet = moneyLeft;
             await userManager.UpdateAsync(hasUser);
+
+            basketItemRepository.Delete(basketItem);
+            basketRepository.Delete(basket);
+
             await unitOfWork.CommitAsync();
             var entityToDto = new PaymentDto
             {
@@ -59,7 +74,7 @@ namespace MiniCourseSalesProject.Service.PaymentService
                 PaymentDate = newPayment.PaymentDate,
                 PaymentStatus = newPayment.PaymentStatus,
             };
-            return ServiceResult<PaymentDto>.Success(entityToDto, HttpStatusCode.BadRequest);
+            return ServiceResult<PaymentDto>.Success(entityToDto, HttpStatusCode.OK);
 
         }
     }

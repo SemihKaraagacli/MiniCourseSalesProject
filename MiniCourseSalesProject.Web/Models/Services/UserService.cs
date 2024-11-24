@@ -28,5 +28,17 @@ namespace MiniCourseSalesProject.Web.Models.Services
             }
             return ServiceResult.Success();
         }
+
+        public async Task<ServiceResult> AddAdminRole(Guid UserId)
+        {
+            var address = $"/Admin/Admin/AddRoleToUser/{UserId}";
+            var response = await client.PostAsJsonAsync(address, UserId);
+            if (!response.IsSuccessStatusCode)
+            {
+                var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+                return ServiceResult.Fail(problemDetails!.Detail!);
+            }
+            return ServiceResult.Success();
+        }
     }
 }

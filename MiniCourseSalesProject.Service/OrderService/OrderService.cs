@@ -62,12 +62,14 @@ namespace MiniCourseSalesProject.Service.OrderService
             {
                 return ServiceResult<OrderDto>.Fail("Order not found.", HttpStatusCode.NotFound);
             }
+            var user = await userManager.FindByIdAsync(hasOrder.UserId.ToString());
             var coursesInBasket = await basketRepository.GetBasketItemInCourseByUserAsync(hasOrder.UserId);
             var a = await basketItemRepository.GetItemsByBasketIdAsync(hasOrder.BasketId);
             var orderToDTo = new OrderDto
             {
                 Id = hasOrder.Id,
                 UserId = hasOrder.UserId,
+                Wallet = user.Wallet,
                 BasketItemInCourseResponses = coursesInBasket.BasketItems.Select(x => new BasketItemInCourseResponse
                 {
                     Id = x.Course.Id,

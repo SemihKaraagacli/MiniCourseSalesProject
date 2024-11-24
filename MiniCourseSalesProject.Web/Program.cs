@@ -45,6 +45,10 @@ builder.Services.AddHttpClient<OrderService>(x =>
 {
     x.BaseAddress = new Uri(builder.Configuration.GetSection("ApiOption")["BaseAdress"]!);
 }).AddHttpMessageHandler<ClientCredentialHandler>();
+builder.Services.AddHttpClient<PaymentService>(x =>
+{
+    x.BaseAddress = new Uri(builder.Configuration.GetSection("ApiOption")["BaseAdress"]!);
+}).AddHttpMessageHandler<ClientCredentialHandler>();
 
 
 builder.Services.AddMemoryCache();
