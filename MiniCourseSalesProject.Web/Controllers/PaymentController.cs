@@ -15,7 +15,7 @@ namespace MiniCourseSalesProject.Web.Controllers
                 foreach (var error in response.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error);
-                    return RedirectToAction("FilterCourseByCategory", "Course");
+                    return RedirectToAction("GetOrderByUserId", "Order");
                 }
             }
             return View(response.Data);

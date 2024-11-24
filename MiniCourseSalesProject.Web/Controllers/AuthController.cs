@@ -1,10 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using MiniCourseSalesProject.Web.Models.Services;
-using MiniCourseSalesProject.Web.Models.Validations;
 using MiniCourseSalesProject.Web.Models.ViewModels;
 
 namespace MiniCourseSalesProject.Web.Controllers
