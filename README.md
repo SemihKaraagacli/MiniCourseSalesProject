@@ -197,7 +197,7 @@ Bu proje, katmanlı mimari kullanılarak bir kurs satış sitesi geliştirilmesi
       "categoryId": "a1b2c3d4-5678-9101-1121-314151617181"
     }
     ```
-  - **Response Body:**
+- **Response Body:**
     ```json
     {
       "status": "Success",
@@ -410,10 +410,10 @@ Bu proje, katmanlı mimari kullanılarak bir kurs satış sitesi geliştirilmesi
         "UserId": "12345678-90ab-cdef-1234-567890abcdef",
         "BasketId": "abcdef12-3456-7890-abcd-ef1234567890"
       }
-      ```
-    - **Response Body:**
-      ```json
-      {
+    ```
+- **Response Body:**
+    ```json
+    {
         "status": "Success",
         "data": "abcdef12-3456-7890-abcd-ef1234567890"  // Sipariş ID'si
     }
@@ -423,14 +423,14 @@ Bu proje, katmanlı mimari kullanılarak bir kurs satış sitesi geliştirilmesi
 - **HTTP Metodu:** `DELETE`  
 - **URL:** `/order/{id}`  
 - **Path Parametreleri:**
-- `id`: Silinecek siparişin ID'si.
+    - `id`: Silinecek siparişin ID'si.
 - **Response Body:**
-     ```json
+    ```json
     {
         "status": "Success",
         "data": null
     }
-      ```
+    ```
 
 **3. Sipariş Detayı Getir**
 - **Açıklama:** Belirtilen ID'ye ait siparişin detaylarını döner.  
