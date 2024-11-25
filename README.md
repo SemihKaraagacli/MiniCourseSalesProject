@@ -1,5 +1,5 @@
 
-## <u> Mini Kurs Satış Sitesi Proje Ödevi</u>
+## <u> Mini Kurs Satış Site Projesi</u>
 
 <details>
 <summary><strong>Ödev Detayı</strong></summary>
