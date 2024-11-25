@@ -355,20 +355,20 @@ Bu proje, katmanlı mimari kullanılarak bir kurs satış sitesi geliştirilmesi
 - **URL:** `/Auth/signin`  
 - **Request Body:**
     ```json
-      {
+    {
         "Email": "user@example.com",
         "Password": "userPassword123"
-      }
-      ```
+    }
+    ```
 - **Response Body:**
     ```json
-      {
+    {
         "status": "Success",
         "data": {
           "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInRva2VuX2lkIjoiZjE2ZTczZDEtZDJhZC00ZThmLTkyYTItM2I2OTlhYmNiM2VhIiwibmFtZWRhdGEiOiJXYWx...
         }
-      }
-      ```
+    }
+    ```
 
 **2. Client Credential ile Giriş**
 
@@ -381,7 +381,7 @@ Bu proje, katmanlı mimari kullanılarak bir kurs satış sitesi geliştirilmesi
         "ClientId": "yourClientId",
         "ClientSecret": "yourClientSecret"
       }
-      ```
+    ```
 - **Response Body:**
     ```json
       {
@@ -390,7 +390,7 @@ Bu proje, katmanlı mimari kullanılarak bir kurs satış sitesi geliştirilmesi
           "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllZW50SWQiOiJ5b3VyQ2xpZW50SWQiLCJ0b2tlbl9pZCI6ImZlZDczM2YtZDk5Yy00ZDJhLTg3YjYtYTgyYzYwOTNlZDhlIiwibmFtZWRhdGEiOiJXYWx...
         }
     }
-      ```
+    ```
 </details>
 </details>
 
