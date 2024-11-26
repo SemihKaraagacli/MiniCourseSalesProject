@@ -2,7 +2,7 @@
 ## <u> Mini Kurs Satış Site Projesi</u>
 
 <details>
-<summary><strong>Ödev Detayı</strong></summary>
+<summary><strong>Detay</strong></summary>
 
 ## Projenin Amacı
 Bu proje, katmanlı mimari kullanılarak bir kurs satış sitesi geliştirilmesini amaçlar. MVC ve API entegrasyonu, JWT tabanlı kimlik doğrulama ile sağlanacak, kullanıcılar kursları görüntüleyip satın alabilecektir.
