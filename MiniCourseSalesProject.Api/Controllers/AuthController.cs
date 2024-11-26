@@ -7,6 +7,7 @@ namespace MiniCourseSalesProject.Api.Controllers
 {
     public class AuthController(IAuthService authService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
+        [Authorize]
         [HttpPost("signin")]
         public async Task<IActionResult> SignIn(SignInRequest signInRequest)
         {

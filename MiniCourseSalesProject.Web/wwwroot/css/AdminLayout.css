@@ -1,0 +1,36 @@
+/* Koyu tema için arka plan ve yazı rengi */
+body {
+    background-color: #343a40;
+    color: white;
+}
+
+/* Navbar'ın koyu tasarımı */
+.navbar {
+    background-color: #212529;
+}
+
+/* Footer'ın sabit olması */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #212529;
+    text-align: center;
+    padding: 10px 0;
+    color: white;
+}
+
+/* Sayfa içerikleri için padding */
+.content {
+    padding: 20px;
+}
+.table-container {
+    margin-top: 30px;
+    background-color: #495057;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.btn-custom {
+    margin: 0 5px;
+}

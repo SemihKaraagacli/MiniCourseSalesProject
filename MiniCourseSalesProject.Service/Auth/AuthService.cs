@@ -53,6 +53,7 @@ namespace MiniCourseSalesProject.Service.Auth
 
             return ServiceResult<TokenResponse>.Success(new TokenResponse(accessTokenAsString), HttpStatusCode.OK);
         }
+
         public Task<ServiceResult<TokenResponse>> SignInClientCredentialAsync(SignInClientCredentialRequest request)
         {
             var clientId = configuration.GetSection("Clients")["ClientId"];

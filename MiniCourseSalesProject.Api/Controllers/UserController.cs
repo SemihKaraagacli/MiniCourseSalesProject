@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MiniCourseSalesProject.Service.User;
 using MiniCourseSalesProject.Service.User.Dtos;
 
@@ -8,7 +9,7 @@ namespace MiniCourseSalesProject.Api.Controllers
     {
 
         //user ekleme silme güncelleme görüntüleme
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpRequest signUpRequest)
         {

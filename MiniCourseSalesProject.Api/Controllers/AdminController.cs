@@ -9,6 +9,7 @@ using MiniCourseSalesProject.Service.User;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
+    [Authorize]
     public class AdminController(ICategoryService categoryService, ICourseService courseService, UserService userService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
     {
 
@@ -88,7 +89,7 @@ namespace MiniCourseSalesProject.Api.Controllers
 
 
         //Assign Role to User
-        [HttpPost("Admin/AddRoleToUser/{UserId}")]
+        [HttpPost("/AddRoleToUser/{UserId}")]
         public async Task<IActionResult> AddRoleToUser(Guid UserId)
         {
             var result = await userService.AddRoleToUserAsync(UserId);

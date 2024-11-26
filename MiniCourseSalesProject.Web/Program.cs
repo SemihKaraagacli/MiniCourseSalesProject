@@ -33,7 +33,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddHttpClient<AuthService>(x =>
 {
     x.BaseAddress = new Uri(builder.Configuration.GetSection("ApiOption")["BaseAdress"]!);
-});
+}).AddHttpMessageHandler<ClientCredentialHandler>();
 builder.Services.AddHttpClient<CourseService>(x =>
 {
     x.BaseAddress = new Uri(builder.Configuration.GetSection("ApiOption")["BaseAdress"]!);

@@ -31,7 +31,7 @@ namespace MiniCourseSalesProject.Web.Models.Services
 
         public async Task<ServiceResult> AddAdminRole(Guid UserId)
         {
-            var address = $"/Admin/Admin/AddRoleToUser/{UserId}";
+            var address = $"/AddRoleToUser/{UserId}";
             var response = await client.PostAsJsonAsync(address, UserId);
             if (!response.IsSuccessStatusCode)
             {
