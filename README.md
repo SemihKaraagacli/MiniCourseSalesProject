@@ -675,7 +675,7 @@ Bu proje, katmanlı mimari kullanılarak bir kurs satış sitesi geliştirilmesi
 <details>
 <summary><strong>Payment Controller</strong></summary>
 
-**1. Kullanıcı Kayıt Ol**
+**1. Ödeme İşlemi**
 - **Açıklama:** Kullanıcı bir sipariş için ödeme işlemini gerçekleştirir. Kullanıcının bakiyesi sipariş tutarını karşılamıyorsa hata döner.  
 - **HTTP Metodu:** `POST`  
 - **URL:** `/payment`  
