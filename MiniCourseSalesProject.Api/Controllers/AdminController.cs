@@ -10,7 +10,7 @@ using MiniCourseSalesProject.Service.User;
 namespace MiniCourseSalesProject.Api.Controllers
 {
     [Authorize]
-    public class AdminController(ICategoryService categoryService, ICourseService courseService, UserService userService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
+    public class AdminController(ICategoryService categoryService, ICourseService courseService, UserService userService, ILogger<CustomControllerBase> logger, ILoggerFactory loggerFactory) : CustomControllerBase(logger, loggerFactory)
     {
 
         //CATEGORY SIDE

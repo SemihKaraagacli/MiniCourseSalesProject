@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MiniCourseSalesProject.Repository.Entities;
 using MiniCourseSalesProject.Service.BasketService;
 using MiniCourseSalesProject.Service.BasketService.Dtos;
@@ -7,7 +8,8 @@ using MiniCourseSalesProject.Service.OrderService.Dtos;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
-    public class OrderController(IOrderService orderService, IBasketService basketService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
+    [Authorize]
+    public class OrderController(IOrderService orderService, IBasketService basketService, ILogger<CustomControllerBase> logger, ILoggerFactory loggerFactory) : CustomControllerBase(logger, loggerFactory)
     {
         [HttpPost]
         public async Task<IActionResult> Create(OrderCreateRequest orderCreateRequest)

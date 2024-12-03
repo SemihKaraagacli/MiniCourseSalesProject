@@ -5,7 +5,7 @@ using MiniCourseSalesProject.Service.Auth.Dtos;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
-    public class AuthController(IAuthService authService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
+    public class AuthController(IAuthService authService, ILogger<CustomControllerBase> logger, ILoggerFactory loggerFactory) : CustomControllerBase(logger, loggerFactory)
     {
         [Authorize]
         [HttpPost("signin")]

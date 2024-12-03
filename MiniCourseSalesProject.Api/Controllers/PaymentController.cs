@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiniCourseSalesProject.Service.PaymentService.Dtos;
 using MiniCourseSalesProject.Service.PaymentService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
-    public class PaymentController(IPaymentService paymentService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
+    [Authorize]
+    public class PaymentController(IPaymentService paymentService, ILogger<CustomControllerBase> logger, ILoggerFactory loggerFactory) : CustomControllerBase(logger, loggerFactory)
     {
         [HttpPost]
         public async Task<IActionResult> ProcessPaymentAsync(PaymentCreateRequest request)

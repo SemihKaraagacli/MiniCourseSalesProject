@@ -9,8 +9,17 @@ using System.Security.Claims;
 
 namespace MiniCourseSalesProject.Web.Models.Services
 {
-    public class AuthService(HttpClient client, IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
+    public class AuthService
     {
+        private readonly HttpClient client;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IConfiguration configuration;
+        public AuthService(HttpClient _client, IHttpContextAccessor _httpContextAccessor, IConfiguration _configuration)
+        {
+            client = _client;
+            httpContextAccessor = _httpContextAccessor;
+            configuration = _configuration;
+        }
         public async Task<ServiceResult> SignInAsync(SignInViewModel viewModel)
         {
             var adress = "/Auth/signin";
@@ -48,21 +57,29 @@ namespace MiniCourseSalesProject.Web.Models.Services
 
             return ServiceResult.Success();
         }
-        public async Task<ServiceResult<SignInResponse>> GetClientCredentialToken()
-        {
-            var crientialTokenAdress = "/Auth/SignInClientCredential";
+        //public async Task<ServiceResult<SignInResponse>> GetClientCredentialToken()
+        //{
+        //    try
+        //    {
+        //        var crientialTokenAdress = "/Auth/SignInClientCredential";
 
-            var crientialTokenRequestModel = new WebClientCredentialRequest(configuration.GetSection("Clients")["ClientId"]!, configuration.GetSection("Clients")["ClientSecret"]!);
+        //        var crientialTokenRequestModel = new WebClientCredentialRequest(configuration.GetSection("Clients")["ClientId"]!, configuration.GetSection("Clients")["ClientSecret"]!);
 
-            var crientialTokenResponse = await client.PostAsJsonAsync(crientialTokenAdress, crientialTokenRequestModel);
+        //        var crientialTokenResponse = await client.PostAsJsonAsync(crientialTokenAdress, crientialTokenRequestModel);
 
-            if (!crientialTokenResponse.IsSuccessStatusCode)
-            {
-                return ServiceResult<SignInResponse>.Fail("Client Credential Token not received.");
-            }
-            var signInResponse = await crientialTokenResponse.Content.ReadFromJsonAsync<SignInResponse>();
-            return ServiceResult<SignInResponse>.Success(signInResponse!);
-        }
+        //        if (!crientialTokenResponse.IsSuccessStatusCode)
+        //        {
+        //            return ServiceResult<SignInResponse>.Fail("Client Credential Token not received.");
+        //        }
+        //        var signInResponse = await crientialTokenResponse.Content.ReadFromJsonAsync<SignInResponse>();
+        //        return ServiceResult<SignInResponse>.Success(signInResponse!);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error: {ex.Message}");
+        //        return ServiceResult<SignInResponse>.Fail("An error occurred while getting the token.");
+        //    }
+        //}
         public async Task<ServiceResult> SignUpAsync(SignUpViewModel viewModelmodel)
         {
             var adress = "/User";

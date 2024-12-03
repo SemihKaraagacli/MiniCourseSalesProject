@@ -5,11 +5,11 @@ using MiniCourseSalesProject.Service.User.Dtos;
 
 namespace MiniCourseSalesProject.Api.Controllers
 {
-    public class UserController(UserService userService, ILogger<CustomControllerBase> logger) : CustomControllerBase(logger)
+    [Authorize]
+    public class UserController(UserService userService, ILogger<CustomControllerBase> logger, ILoggerFactory loggerFactory) : CustomControllerBase(logger, loggerFactory)
     {
 
         //user ekleme silme güncelleme görüntüleme
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpRequest signUpRequest)
         {
