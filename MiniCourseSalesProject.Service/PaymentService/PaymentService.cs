@@ -32,11 +32,27 @@ namespace MiniCourseSalesProject.Service.PaymentService
             if (userWallet < orderAmount)
             {
                 var priceDifference = orderAmount - userWallet;
-                return ServiceResult<PaymentDto>.Fail($"insufficient balance:{priceDifference}", HttpStatusCode.BadRequest);
+                var newInsufficientPayment = new Payment
+                {
+                    PaymentStatus = "Failed",
+                };
+                var insufficientPayment = new PaymentDto
+                {
+                    PaymentStatus = newInsufficientPayment.PaymentStatus,
+                };
+                return ServiceResult<PaymentDto>.Success(insufficientPayment, HttpStatusCode.OK);
             }
             if (userWallet == orderAmount)
             {
-                return ServiceResult<PaymentDto>.Fail("insufficient balance", HttpStatusCode.BadRequest);
+                var newInsufficientPayment = new Payment
+                {
+                    PaymentStatus = "Failed",
+                };
+                var insufficientPayment = new PaymentDto
+                {
+                    PaymentStatus = newInsufficientPayment.PaymentStatus,
+                };
+                return ServiceResult<PaymentDto>.Success(insufficientPayment, HttpStatusCode.OK);
             }
 
             var newPayment = new Payment
